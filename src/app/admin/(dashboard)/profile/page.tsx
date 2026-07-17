@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { saveProfile } from "@/lib/actions/profile";
-import { FormField, FieldLabel } from "@/components/molecules/form-field";
-import { Textarea } from "@/components/atoms/textarea";
+import { FormField } from "@/components/molecules/form-field";
+import { LocalizedTextareaField } from "@/components/molecules/localized-textarea-field";
 import { Button } from "@/components/atoms/button";
 import { ImageUploadField } from "@/components/organisms/image-upload-field";
 
@@ -21,9 +21,14 @@ export default async function AdminProfilePage() {
         <FormField label="GitHub URL" name="github" defaultValue={profile?.github} />
         <FormField label="LinkedIn URL" name="linkedin" defaultValue={profile?.linkedin} />
 
-        <FieldLabel label="Summary">
-          <Textarea name="summary" rows={6} defaultValue={profile?.summary} required />
-        </FieldLabel>
+        <LocalizedTextareaField
+          label="Summary"
+          nameEn="summary"
+          nameId="summaryId"
+          defaultValueEn={profile?.summary}
+          defaultValueId={profile?.summaryId}
+          rows={6}
+        />
 
         <ImageUploadField
           name="avatarUrl"

@@ -1,0 +1,65 @@
+{
+  "Nav": {
+    "home": "Beranda",
+    "about": "Tentang",
+    "experience": "Pengalaman",
+    "projects": "Proyek",
+    "contact": "Kontak",
+    "menu": "Menu",
+    "close": "Tutup"
+  },
+  "Hero": {
+    "viewExperience": "Lihat pengalaman",
+    "getInTouch": "Hubungi saya",
+    "downloadCv": "Unduh CV"
+  },
+  "Home": {
+    "noProfile": "Belum ada data profil. Isi database atau tambahkan lewat /admin.",
+    "stackTitle": "Teknologi",
+    "featuredWorkTitle": "Proyek pilihan",
+    "viewAllProjects": "Lihat semua proyek"
+  },
+  "About": {
+    "title": "Tentang",
+    "basedIn": "Berdomisili di",
+    "email": "Email",
+    "phone": "Telepon",
+    "role": "Peran",
+    "education": "Pendidikan",
+    "organization": "Organisasi"
+  },
+  "Experience": {
+    "title": "Pengalaman",
+    "current": "Saat ini"
+  },
+  "Projects": {
+    "title": "Proyek",
+    "featured": "Unggulan",
+    "empty": "Belum ada proyek - tambahkan lewat /admin/projects."
+  },
+  "ProjectDetail": {
+    "allProjects": "Semua proyek",
+    "description": "Deskripsi",
+    "stack": "Teknologi",
+    "links": "Tautan",
+    "liveSite": "Situs langsung",
+    "repository": "Repositori",
+    "screenshots": "Tangkapan layar",
+    "notFound": "Proyek tidak ditemukan"
+  },
+  "Contact": {
+    "title": "Kontak",
+    "headlinePre": "Mari membangun",
+    "headlineAccent": "sesuatu",
+    "headlinePost": "bersama."
+  },
+  "Footer": {
+    "builtWith": "Dibangun dengan Next.js + Prisma + PostgreSQL"
+  },
+  "Metadata": {
+    "about": { "title": "Tentang - Gregorius Verli", "description": "Tentang Gregorius Verli Giga Winarno - pengembang JavaScript fullstack." },
+    "experience": { "title": "Pengalaman - Gregorius Verli", "description": "Pengalaman kerja Gregorius Verli Giga Winarno." },
+    "projects": { "title": "Proyek - Gregorius Verli", "description": "Proyek-proyek pilihan oleh Gregorius Verli Giga Winarno." },
+    "contact": { "title": "Kontak - Gregorius Verli", "description": "Hubungi Gregorius Verli Giga Winarno." }
+  }
+}

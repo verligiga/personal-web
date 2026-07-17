@@ -46,7 +46,7 @@ export function ThemeToggle({ className }: { className?: string }) {
       <span
         className={cn(
           "absolute left-0.5 flex h-6 w-6 items-center justify-center rounded-full bg-primary text-primary-foreground transition-transform duration-300 ease-out",
-          isDark && "translate-x-[28px]",
+          isDark && "translate-x-7",
         )}
       >
         {mounted && (isDark ? <MoonIcon /> : <SunIcon />)}

@@ -42,7 +42,7 @@ export default async function AdminProjectsPage() {
                 {project.slug}
               </TableCell>
               <TableCell className="font-mono text-xs text-muted-foreground">
-                {project.featured ? "Yes" : "—"}
+                {project.featured ? "Yes" : "-"}
               </TableCell>
               <TableCell className="flex justify-end gap-3">
                 <Link

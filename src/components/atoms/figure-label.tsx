@@ -12,7 +12,7 @@ export function FigureLabel({
   return (
     <span className={cn("font-mono text-2xs tracking-widest text-rust", className)}>
       FIG. {fig}
-      {children && <> — {children}</>}
+      {children && <> - {children}</>}
     </span>
   );
 }

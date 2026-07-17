@@ -50,7 +50,7 @@ export function MediaPickerDialog({
         <div className="mb-6 flex items-start justify-between gap-4">
           <div>
             <p className="mb-1 font-mono text-2xs tracking-widest text-rust">
-              FIG. U1 — MEDIA LIBRARY
+              FIG. U1 - MEDIA LIBRARY
             </p>
             <h2 className="font-mono text-lg text-foreground">Choose existing file</h2>
           </div>

@@ -1,11 +1,14 @@
-import Link from "next/link";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import type { Profile } from "@/generated/prisma/client";
+import { Link } from "@/i18n/navigation";
 import { FigureLabel } from "@/components/atoms/figure-label";
 import { Reveal } from "@/components/atoms/reveal";
 import { CVDownloadButton } from "@/components/atoms/cv-download-button";
 
 export function Hero({ profile }: { profile: Profile }) {
+  const t = useTranslations("Hero");
+
   return (
     <section className="flex min-h-[70vh] flex-col justify-center py-20">
       <div className="flex flex-col gap-8 sm:flex-row sm:items-start">
@@ -49,14 +52,14 @@ export function Hero({ profile }: { profile: Profile }) {
                 href="/experience"
                 className="border border-primary px-6 py-3 font-mono text-2xs tracking-widest text-primary transition-all duration-200 hover:bg-primary hover:text-primary-foreground"
               >
-                VIEW EXPERIENCE
+                {t("viewExperience").toUpperCase()}
               </Link>
               <CVDownloadButton />
               <Link
                 href="/contact"
                 className="border border-dashed border-border px-6 py-3 font-mono text-2xs tracking-widest text-foreground transition-all duration-200 hover:border-primary"
               >
-                GET IN TOUCH
+                {t("getInTouch").toUpperCase()}
               </Link>
             </div>
           </Reveal>

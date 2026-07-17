@@ -13,7 +13,7 @@ export function CVUploadForm({ currentCV }: { currentCV: CVData | null }) {
 
   async function handleUpload(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    // Captured before the `await` — React nulls out `e.currentTarget` once
+    // Captured before the `await` - React nulls out `e.currentTarget` once
     // the synchronous part of the handler finishes, so using `e.currentTarget`
     // again after an await throws "Cannot read properties of null".
     const form = e.currentTarget;
@@ -87,6 +87,7 @@ export function CVUploadForm({ currentCV }: { currentCV: CVData | null }) {
           </div>
 
           <div className="flex gap-2">
+            {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- /api/cv is a download endpoint, not a page */}
             <a
               href="/api/cv"
               className="border border-primary px-4 py-2 font-mono text-2xs tracking-widest text-primary hover:bg-primary/5"

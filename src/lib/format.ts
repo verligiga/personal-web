@@ -10,7 +10,7 @@ function formatMonth(date: Date) {
 export function formatPeriod(startDate: Date, endDate: Date | null) {
   const start = formatMonth(startDate);
   const end = endDate ? formatMonth(endDate) : "Now";
-  return `${start} — ${end}`;
+  return `${start} - ${end}`;
 }
 
 export function toDateInputValue(date: Date | null | undefined): string {

@@ -14,7 +14,9 @@ const baseSchema = z.object({
     .regex(/^[a-z0-9-]+$/, "Slug must be lowercase letters, numbers and hyphens only"),
   title: z.string().min(1),
   summary: z.string().min(1),
+  summaryId: z.string().optional().or(z.literal("")),
   description: z.string().min(1),
+  descriptionId: z.string().optional().or(z.literal("")),
   coverImageUrl: z.string().url().optional().or(z.literal("")),
   liveUrl: z.string().url().optional().or(z.literal("")),
   repoUrl: z.string().url().optional().or(z.literal("")),
@@ -24,10 +26,13 @@ const baseSchema = z.object({
 });
 
 function revalidateProjects(slug?: string) {
-  revalidatePath("/");
-  revalidatePath("/projects");
-  revalidatePath("/admin/projects");
-  if (slug) revalidatePath(`/projects/${slug}`);
+  for (const path of ["/", "/id", "/projects", "/id/projects", "/admin/projects"]) {
+    revalidatePath(path);
+  }
+  if (slug) {
+    revalidatePath(`/projects/${slug}`);
+    revalidatePath(`/id/projects/${slug}`);
+  }
 }
 
 function parseForm(formData: FormData) {
@@ -35,7 +40,9 @@ function parseForm(formData: FormData) {
     slug: formData.get("slug"),
     title: formData.get("title"),
     summary: formData.get("summary"),
+    summaryId: formData.get("summaryId") || "",
     description: formData.get("description"),
+    descriptionId: formData.get("descriptionId") || "",
     coverImageUrl: formData.get("coverImageUrl") || "",
     liveUrl: formData.get("liveUrl") || "",
     repoUrl: formData.get("repoUrl") || "",
@@ -45,44 +52,38 @@ function parseForm(formData: FormData) {
   });
 }
 
+function buildPayload(formData: FormData) {
+  const data = parseForm(formData);
+  return {
+    ...data,
+    summaryId: data.summaryId || null,
+    descriptionId: data.descriptionId || null,
+    coverImageUrl: data.coverImageUrl || null,
+    liveUrl: data.liveUrl || null,
+    repoUrl: data.repoUrl || null,
+    year: data.year || null,
+    techStack: csvToArray(formData.get("techStack")),
+    screenshots: parseJsonStringArray(formData.get("screenshots")),
+  };
+}
+
 export async function createProject(formData: FormData) {
   await requireAdmin();
-  const data = parseForm(formData);
+  const payload = buildPayload(formData);
 
-  await prisma.project.create({
-    data: {
-      ...data,
-      coverImageUrl: data.coverImageUrl || null,
-      liveUrl: data.liveUrl || null,
-      repoUrl: data.repoUrl || null,
-      year: data.year || null,
-      techStack: csvToArray(formData.get("techStack")),
-      screenshots: parseJsonStringArray(formData.get("screenshots")),
-    },
-  });
+  await prisma.project.create({ data: payload });
 
-  revalidateProjects(data.slug);
+  revalidateProjects(payload.slug);
   redirect("/admin/projects");
 }
 
 export async function updateProject(id: string, formData: FormData) {
   await requireAdmin();
-  const data = parseForm(formData);
+  const payload = buildPayload(formData);
 
-  await prisma.project.update({
-    where: { id },
-    data: {
-      ...data,
-      coverImageUrl: data.coverImageUrl || null,
-      liveUrl: data.liveUrl || null,
-      repoUrl: data.repoUrl || null,
-      year: data.year || null,
-      techStack: csvToArray(formData.get("techStack")),
-      screenshots: parseJsonStringArray(formData.get("screenshots")),
-    },
-  });
+  await prisma.project.update({ where: { id }, data: payload });
 
-  revalidateProjects(data.slug);
+  revalidateProjects(payload.slug);
   redirect("/admin/projects");
 }
 

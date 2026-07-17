@@ -1,7 +1,7 @@
 import type { OrganizationRole } from "@/generated/prisma/client";
 import { arrayToLines } from "@/lib/actions/parse";
-import { FormField, FieldLabel } from "@/components/molecules/form-field";
-import { Textarea } from "@/components/atoms/textarea";
+import { FormField } from "@/components/molecules/form-field";
+import { LocalizedTextareaField } from "@/components/molecules/localized-textarea-field";
 import { Button } from "@/components/atoms/button";
 
 export function OrganizationForm({
@@ -17,9 +17,14 @@ export function OrganizationForm({
       <FormField label="Organization" name="org" defaultValue={organizationRole?.org} />
       <FormField label="Period" name="period" defaultValue={organizationRole?.period} />
 
-      <FieldLabel label="Bullets (one per line)">
-        <Textarea name="bullets" rows={5} defaultValue={arrayToLines(organizationRole?.bullets)} />
-      </FieldLabel>
+      <LocalizedTextareaField
+        label="Bullets (one per line)"
+        nameEn="bullets"
+        nameId="bulletsId"
+        defaultValueEn={arrayToLines(organizationRole?.bullets)}
+        defaultValueId={arrayToLines(organizationRole?.bulletsId)}
+        rows={5}
+      />
 
       <FormField
         label="Order"

@@ -17,9 +17,18 @@ const baseSchema = z.object({
 });
 
 function revalidateExperience() {
-  revalidatePath("/");
-  revalidatePath("/experience");
-  revalidatePath("/admin/experience");
+  for (const path of ["/", "/id", "/experience", "/id/experience", "/admin/experience"]) {
+    revalidatePath(path);
+  }
+}
+
+function parseTranslatedFields(formData: FormData) {
+  return {
+    bullets: linesToArray(formData.get("bullets")),
+    bulletsId: linesToArray(formData.get("bulletsId")),
+    techStack: csvToArray(formData.get("techStack")),
+    subProjects: parseSubProjects(formData.get("subProjects")),
+  };
 }
 
 export async function createExperience(formData: FormData) {
@@ -42,9 +51,7 @@ export async function createExperience(formData: FormData) {
       startDate: data.startDate,
       endDate: data.endDate || null,
       order: data.order,
-      bullets: linesToArray(formData.get("bullets")),
-      techStack: csvToArray(formData.get("techStack")),
-      subProjects: parseSubProjects(formData.get("subProjects")),
+      ...parseTranslatedFields(formData),
     },
   });
 
@@ -73,9 +80,7 @@ export async function updateExperience(id: string, formData: FormData) {
       startDate: data.startDate,
       endDate: data.endDate || null,
       order: data.order,
-      bullets: linesToArray(formData.get("bullets")),
-      techStack: csvToArray(formData.get("techStack")),
-      subProjects: parseSubProjects(formData.get("subProjects")),
+      ...parseTranslatedFields(formData),
     },
   });
 

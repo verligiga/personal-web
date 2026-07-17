@@ -30,7 +30,7 @@ export async function uploadCV(formData: FormData) {
     const previousCV = await prisma.cV.findFirst();
 
     // Upload the new file (unique path, so it can't collide with the
-    // existing one) before touching the old CV — if this fails, the old
+    // existing one) before touching the old CV - if this fails, the old
     // CV is untouched instead of being left deleted with nothing to
     // replace it.
     const blob = await put(`cv/${Date.now()}-${file.name}`, file, {

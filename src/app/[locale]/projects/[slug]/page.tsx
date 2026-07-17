@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
 import { asStringArray } from "@/lib/format";
+import { localized } from "@/lib/i18n";
+import { Link } from "@/i18n/navigation";
 import { PageShell } from "@/components/templates/page-shell";
 import { Reveal } from "@/components/atoms/reveal";
 import { Tag } from "@/components/atoms/tag";
@@ -12,25 +14,35 @@ import { ScreenshotCarousel } from "@/components/organisms/screenshot-carousel";
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
-  const { slug } = await params;
-  const project = await prisma.project.findUnique({ where: { slug } });
-  return { title: project ? `${project.title} — Gregorius Verli` : "Project not found" };
+  const { locale, slug } = await params;
+  const [project, t] = await Promise.all([
+    prisma.project.findUnique({ where: { slug } }),
+    getTranslations({ locale, namespace: "ProjectDetail" }),
+  ]);
+  return { title: project ? `${project.title} - Gregorius Verli` : t("notFound") };
 }
 
 export default async function ProjectDetailPage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }) {
-  const { slug } = await params;
-  const project = await prisma.project.findUnique({ where: { slug } });
+  const { locale, slug } = await params;
+  setRequestLocale(locale);
+
+  const [project, t] = await Promise.all([
+    prisma.project.findUnique({ where: { slug } }),
+    getTranslations("ProjectDetail"),
+  ]);
 
   if (!project) notFound();
 
   const techStack = asStringArray(project.techStack);
   const screenshots = asStringArray(project.screenshots);
+  const summary = localized(locale, project.summary, project.summaryId);
+  const description = localized(locale, project.description, project.descriptionId);
 
   return (
     <PageShell narrow>
@@ -38,15 +50,15 @@ export default async function ProjectDetailPage({
         href="/projects"
         className="font-mono text-2xs tracking-widest text-primary transition-colors hover:underline"
       >
-        ← ALL PROJECTS
+        ← {t("allProjects").toUpperCase()}
       </Link>
 
       <Reveal delay={0.05}>
         <p className="mt-8 font-mono text-2xs tracking-widest text-rust">
-          FIG. — {project.year ?? ""}
+          FIG. - {project.year ?? ""}
         </p>
         <h1 className="mt-3 font-mono text-4xl text-foreground sm:text-5xl">{project.title}</h1>
-        <p className="mt-4 max-w-2xl text-sm text-muted-foreground">{project.summary}</p>
+        <p className="mt-4 max-w-2xl text-sm text-muted-foreground">{summary}</p>
       </Reveal>
 
       {project.coverImageUrl && (
@@ -68,22 +80,24 @@ export default async function ProjectDetailPage({
       <div className="mt-10 grid gap-10 md:grid-cols-3">
         <Reveal delay={0.15} className="md:col-span-2">
           <p className="mb-3 font-mono text-2xs tracking-widest text-muted-foreground">
-            {"// DESCRIPTION"}
+            {"// "}
+            {t("description").toUpperCase()}
           </p>
           <p className="whitespace-pre-line text-sm leading-relaxed text-foreground">
-            {project.description}
+            {description}
           </p>
         </Reveal>
 
         <Reveal delay={0.2} className="flex flex-col gap-8">
           <div>
             <p className="mb-3 font-mono text-2xs tracking-widest text-muted-foreground">
-              {"// STACK"}
+              {"// "}
+              {t("stack").toUpperCase()}
             </p>
             <ul className="flex flex-wrap gap-1.5">
-              {techStack.map((t) => (
-                <li key={t}>
-                  <Tag>{t}</Tag>
+              {techStack.map((tech) => (
+                <li key={tech}>
+                  <Tag>{tech}</Tag>
                 </li>
               ))}
             </ul>
@@ -92,7 +106,8 @@ export default async function ProjectDetailPage({
           {(project.liveUrl || project.repoUrl) && (
             <div>
               <p className="mb-3 font-mono text-2xs tracking-widest text-muted-foreground">
-                {"// LINKS"}
+                {"// "}
+                {t("links").toUpperCase()}
               </p>
               <div className="flex flex-col gap-2">
                 {project.liveUrl && (
@@ -102,7 +117,7 @@ export default async function ProjectDetailPage({
                     rel="noreferrer"
                     className="font-mono text-xs text-primary transition-colors hover:underline"
                   >
-                    Live site ↗
+                    {t("liveSite")} ↗
                   </a>
                 )}
                 {project.repoUrl && (
@@ -112,7 +127,7 @@ export default async function ProjectDetailPage({
                     rel="noreferrer"
                     className="font-mono text-xs text-primary transition-colors hover:underline"
                   >
-                    Repository ↗
+                    {t("repository")} ↗
                   </a>
                 )}
               </div>
@@ -124,7 +139,8 @@ export default async function ProjectDetailPage({
       {screenshots.length > 0 && (
         <Reveal x={60} y={0} delay={0.1} className="mt-16">
           <p className="mb-6 font-mono text-2xs tracking-widest text-muted-foreground">
-            {"// SCREENSHOTS"}
+            {"// "}
+            {t("screenshots").toUpperCase()}
           </p>
           <ScreenshotCarousel images={screenshots} alt={project.title} />
         </Reveal>

@@ -2,6 +2,7 @@ import type { Project } from "@/generated/prisma/client";
 import { arrayToCsv } from "@/lib/actions/parse";
 import { asStringArray } from "@/lib/format";
 import { FormField, FieldLabel } from "@/components/molecules/form-field";
+import { LocalizedTextareaField } from "@/components/molecules/localized-textarea-field";
 import { Textarea } from "@/components/atoms/textarea";
 import { Button } from "@/components/atoms/button";
 import { ImageUploadField } from "@/components/organisms/image-upload-field";
@@ -25,11 +26,23 @@ export function ProjectForm({
         />
       </div>
 
-      <FormField label="Summary" name="summary" defaultValue={project?.summary} />
+      <LocalizedTextareaField
+        label="Summary"
+        nameEn="summary"
+        nameId="summaryId"
+        defaultValueEn={project?.summary}
+        defaultValueId={project?.summaryId}
+        rows={2}
+      />
 
-      <FieldLabel label="Description">
-        <Textarea name="description" rows={6} defaultValue={project?.description} required />
-      </FieldLabel>
+      <LocalizedTextareaField
+        label="Description"
+        nameEn="description"
+        nameId="descriptionId"
+        defaultValueEn={project?.description}
+        defaultValueId={project?.descriptionId}
+        rows={6}
+      />
 
       <FieldLabel label="Tech stack (comma separated)">
         <Textarea name="techStack" rows={2} defaultValue={arrayToCsv(project?.techStack)} />

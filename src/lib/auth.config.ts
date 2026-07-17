@@ -1,6 +1,6 @@
 import type { NextAuthConfig } from "next-auth";
 
-// Edge-safe config (no Prisma/bcrypt) — used by middleware to check session
+// Edge-safe config (no Prisma/bcrypt) - used by middleware to check session
 // cookies. The Credentials provider with DB access is added on top of this
 // in `auth.ts`, which only runs in the Node.js runtime.
 export default {

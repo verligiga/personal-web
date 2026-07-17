@@ -1,24 +1,43 @@
 import type { Metadata } from "next";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
 import { PageShell } from "@/components/templates/page-shell";
 import { SectionLabel } from "@/components/molecules/section-label";
 import { Reveal } from "@/components/atoms/reveal";
 
-export const metadata: Metadata = { title: "Contact — Gregorius Verli" };
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Metadata.contact" });
+  return { title: t("title"), description: t("description") };
+}
 
-export default async function ContactPage() {
-  const profile = await prisma.profile.findFirst();
+export default async function ContactPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
+  const [profile, t] = await Promise.all([
+    prisma.profile.findFirst(),
+    getTranslations("Contact"),
+  ]);
   if (!profile) return null;
 
   return (
     <PageShell narrow>
-      <SectionLabel fig="06" title="Contact" />
+      <SectionLabel fig="06" title={t("title")} />
 
       <Reveal>
         <h1 className="font-mono text-[9vw] leading-[0.95] text-foreground sm:text-6xl lg:text-7xl">
-          Let&apos;s build
+          {t("headlinePre")}
           <br />
-          <span className="text-primary">something</span> together.
+          <span className="text-primary">{t("headlineAccent")}</span> {t("headlinePost")}
         </h1>
       </Reveal>
 

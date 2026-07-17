@@ -1,19 +1,20 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { AnimatePresence, motion } from "motion/react";
+import { Link, usePathname } from "@/i18n/navigation";
 import { NavLink } from "@/components/molecules/nav-link";
 import { ThemeToggle } from "@/components/molecules/theme-toggle";
+import { LanguageToggle } from "@/components/molecules/language-toggle";
 
 const links = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/experience", label: "Experience" },
-  { href: "/projects", label: "Projects" },
-  { href: "/contact", label: "Contact" },
-];
+  { href: "/", key: "home" },
+  { href: "/about", key: "about" },
+  { href: "/experience", key: "experience" },
+  { href: "/projects", key: "projects" },
+  { href: "/contact", key: "contact" },
+] as const;
 
 function isActive(pathname: string | null, href: string) {
   return href === "/" ? pathname === "/" : Boolean(pathname?.startsWith(href));
@@ -21,15 +22,14 @@ function isActive(pathname: string | null, href: string) {
 
 export function SiteHeader() {
   const pathname = usePathname();
+  const t = useTranslations("Nav");
   const [open, setOpen] = useState(false);
-
-  if (pathname?.startsWith("/admin")) return null;
 
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/90 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 lg:px-10">
         <Link href="/" className="font-mono text-sm tracking-widest text-foreground">
-          REF. GV<span className="text-primary">—</span>01
+          GVGW - 13
         </Link>
 
         <div className="hidden md:flex">
@@ -38,7 +38,7 @@ export function SiteHeader() {
               <NavLink
                 key={link.href}
                 href={link.href}
-                label={link.label}
+                label={t(link.key)}
                 active={isActive(pathname, link.href)}
                 className="px-3 py-1.5"
               />
@@ -47,6 +47,7 @@ export function SiteHeader() {
         </div>
 
         <div className="flex items-center gap-4">
+          <LanguageToggle />
           <ThemeToggle />
 
           <button
@@ -54,7 +55,7 @@ export function SiteHeader() {
             className="font-mono text-2xs tracking-widest text-primary transition-colors md:hidden"
             aria-label="Toggle navigation"
           >
-            {open ? "CLOSE" : "MENU"}
+            {open ? t("close") : t("menu")}
           </button>
         </div>
       </div>
@@ -73,7 +74,7 @@ export function SiteHeader() {
                 <NavLink
                   key={link.href}
                   href={link.href}
-                  label={link.label}
+                  label={t(link.key)}
                   active={isActive(pathname, link.href)}
                   onClick={() => setOpen(false)}
                   className="py-2"

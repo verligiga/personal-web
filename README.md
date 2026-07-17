@@ -1,4 +1,4 @@
-# Portofolio — Gregorius Verli Giga Winarno
+# Portofolio - Gregorius Verli Giga Winarno
 
 Personal portofolio with a self-built CMS. Public site (Home, About, Experience,
 Projects, Contact) reads content from Postgres; everything is editable from
@@ -34,10 +34,10 @@ Copy `.env.example` to `.env` and fill in every value:
 cp .env.example .env
 ```
 
-- `DATABASE_URL` — Neon pooled connection string
-- `AUTH_SECRET` — generate with `npx auth secret`
-- `BLOB_READ_WRITE_TOKEN` — from step 3
-- `ADMIN_EMAIL` / `ADMIN_PASSWORD` — credentials for the one-time seed script
+- `DATABASE_URL` - Neon pooled connection string
+- `AUTH_SECRET` - generate with `npx auth secret`
+- `BLOB_READ_WRITE_TOKEN` - from step 3
+- `ADMIN_EMAIL` / `ADMIN_PASSWORD` - credentials for the one-time seed script
   below (only used at seed time, not read at runtime)
 
 ### 5. Push the schema and seed content
@@ -61,8 +61,8 @@ npm run dev
 
 ## Editing content
 
-Everything on the public site — profile, experience, projects, skills,
-education, organization roles — is managed from `/admin`. No redeploy is
+Everything on the public site - profile, experience, projects, skills,
+education, organization roles - is managed from `/admin`. No redeploy is
 needed after an edit; pages revalidate on save.
 
 ## Notes
@@ -71,4 +71,4 @@ needed after an edit; pages revalidate on save.
   in the root layout) since content comes from the database rather than being
   known at build time.
 - Mutations use Server Actions (`src/lib/actions/*`), not a separate REST/GraphQL
-  API — appropriate for a single-admin personal CMS.
+  API - appropriate for a single-admin personal CMS.

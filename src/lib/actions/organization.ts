@@ -15,36 +15,35 @@ const schema = z.object({
 });
 
 function revalidateOrganization() {
-  revalidatePath("/about");
-  revalidatePath("/admin/organization");
+  for (const path of ["/about", "/id/about", "/admin/organization"]) {
+    revalidatePath(path);
+  }
 }
 
-function parseForm(formData: FormData) {
-  return schema.parse({
+function buildPayload(formData: FormData) {
+  const data = schema.parse({
     role: formData.get("role"),
     org: formData.get("org"),
     period: formData.get("period"),
     order: formData.get("order") || 0,
   });
+  return {
+    ...data,
+    bullets: linesToArray(formData.get("bullets")),
+    bulletsId: linesToArray(formData.get("bulletsId")),
+  };
 }
 
 export async function createOrganizationRole(formData: FormData) {
   await requireAdmin();
-  const data = parseForm(formData);
-  await prisma.organizationRole.create({
-    data: { ...data, bullets: linesToArray(formData.get("bullets")) },
-  });
+  await prisma.organizationRole.create({ data: buildPayload(formData) });
   revalidateOrganization();
   redirect("/admin/organization");
 }
 
 export async function updateOrganizationRole(id: string, formData: FormData) {
   await requireAdmin();
-  const data = parseForm(formData);
-  await prisma.organizationRole.update({
-    where: { id },
-    data: { ...data, bullets: linesToArray(formData.get("bullets")) },
-  });
+  await prisma.organizationRole.update({ where: { id }, data: buildPayload(formData) });
   revalidateOrganization();
   redirect("/admin/organization");
 }

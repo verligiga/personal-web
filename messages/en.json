@@ -1,0 +1,65 @@
+{
+  "Nav": {
+    "home": "Home",
+    "about": "About",
+    "experience": "Experience",
+    "projects": "Projects",
+    "contact": "Contact",
+    "menu": "Menu",
+    "close": "Close"
+  },
+  "Hero": {
+    "viewExperience": "View experience",
+    "getInTouch": "Get in touch",
+    "downloadCv": "Download CV"
+  },
+  "Home": {
+    "noProfile": "No profile data yet. Seed the database or add one from /admin.",
+    "stackTitle": "Stack",
+    "featuredWorkTitle": "Featured work",
+    "viewAllProjects": "View all projects"
+  },
+  "About": {
+    "title": "About",
+    "basedIn": "Based in",
+    "email": "Email",
+    "phone": "Phone",
+    "role": "Role",
+    "education": "Education",
+    "organization": "Organization"
+  },
+  "Experience": {
+    "title": "Experience",
+    "current": "Current"
+  },
+  "Projects": {
+    "title": "Projects",
+    "featured": "Featured",
+    "empty": "No projects yet - add some from /admin/projects."
+  },
+  "ProjectDetail": {
+    "allProjects": "All projects",
+    "description": "Description",
+    "stack": "Stack",
+    "links": "Links",
+    "liveSite": "Live site",
+    "repository": "Repository",
+    "screenshots": "Screenshots",
+    "notFound": "Project not found"
+  },
+  "Contact": {
+    "title": "Contact",
+    "headlinePre": "Let's build",
+    "headlineAccent": "something",
+    "headlinePost": "together."
+  },
+  "Footer": {
+    "builtWith": "Built with Next.js + Prisma + PostgreSQL"
+  },
+  "Metadata": {
+    "about": { "title": "About - Gregorius Verli", "description": "About Gregorius Verli Giga Winarno - fullstack JavaScript developer." },
+    "experience": { "title": "Experience - Gregorius Verli", "description": "Work experience of Gregorius Verli Giga Winarno." },
+    "projects": { "title": "Projects - Gregorius Verli", "description": "Selected projects by Gregorius Verli Giga Winarno." },
+    "contact": { "title": "Contact - Gregorius Verli", "description": "Get in touch with Gregorius Verli Giga Winarno." }
+  }
+}

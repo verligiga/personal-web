@@ -19,7 +19,7 @@ export function ImageCropDialog({
 }) {
   // Created and revoked together inside one effect (rather than a useMemo +
   // separate cleanup) so the pairing survives React StrictMode's dev-mode
-  // double-invoke of effects — otherwise the simulated unmount revokes the
+  // double-invoke of effects - otherwise the simulated unmount revokes the
   // URL a render produced via useMemo but never recreates it, leaving the
   // <img> pointed at a dead blob: URL.
   const [imageSrc, setImageSrc] = useState<string | null>(null);
@@ -48,7 +48,7 @@ export function ImageCropDialog({
       <div className="relative w-full max-w-lg border border-dashed border-border bg-(--panel-surface) p-6">
         <CornerTicks />
 
-        <p className="mb-1 font-mono text-2xs tracking-widest text-rust">FIG. U0 — CROP IMAGE</p>
+        <p className="mb-1 font-mono text-2xs tracking-widest text-rust">FIG. U0 - CROP IMAGE</p>
         <h2 className="mb-6 font-mono text-lg text-foreground">Adjust framing</h2>
 
         <div className="relative h-72 w-full overflow-hidden border border-dashed border-border">

@@ -20,6 +20,7 @@ model Profile {
   github    String
   linkedin  String
   summary   String   @db.Text
+  summaryId String?  @db.Text
   avatarUrl String?
   updatedAt DateTime @updatedAt
 }
@@ -33,6 +34,7 @@ model Experience {
   endDate      DateTime?
   order        Int       @default(0)
   bullets      Json
+  bulletsId    Json?
   techStack    Json
   subProjects  Json?
   createdAt    DateTime  @default(now())
@@ -46,7 +48,9 @@ model Project {
   slug          String   @unique
   title         String
   summary       String
+  summaryId     String?
   description   String   @db.Text
+  descriptionId String?  @db.Text
   coverImageUrl String?
   screenshots   Json?
   techStack     Json
@@ -86,18 +90,20 @@ model Education {
   program String
   period  String
   note    String?
+  noteId  String?
   order   Int    @default(0)
 
   @@index([order])
 }
 
 model OrganizationRole {
-  id      String @id @default(cuid())
-  role    String
-  org     String
-  period  String
-  bullets Json
-  order   Int    @default(0)
+  id        String @id @default(cuid())
+  role      String
+  org       String
+  period    String
+  bullets   Json
+  bulletsId Json?
+  order     Int    @default(0)
 
   @@index([order])
 }

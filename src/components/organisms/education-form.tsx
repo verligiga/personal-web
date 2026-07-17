@@ -1,6 +1,6 @@
 import type { Education } from "@/generated/prisma/client";
-import { FormField, FieldLabel } from "@/components/molecules/form-field";
-import { Textarea } from "@/components/atoms/textarea";
+import { FormField } from "@/components/molecules/form-field";
+import { LocalizedTextareaField } from "@/components/molecules/localized-textarea-field";
 import { Button } from "@/components/atoms/button";
 
 export function EducationForm({
@@ -16,9 +16,14 @@ export function EducationForm({
       <FormField label="Program" name="program" defaultValue={education?.program} />
       <FormField label="Period" name="period" defaultValue={education?.period} />
 
-      <FieldLabel label="Note (optional)">
-        <Textarea name="note" rows={2} defaultValue={education?.note ?? ""} />
-      </FieldLabel>
+      <LocalizedTextareaField
+        label="Note (optional)"
+        nameEn="note"
+        nameId="noteId"
+        defaultValueEn={education?.note}
+        defaultValueId={education?.noteId}
+        rows={2}
+      />
 
       <FormField label="Order" name="order" type="number" defaultValue={String(education?.order ?? 0)} />
 

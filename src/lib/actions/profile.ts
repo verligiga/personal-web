@@ -14,8 +14,15 @@ const profileSchema = z.object({
   github: z.string().url(),
   linkedin: z.string().url(),
   summary: z.string().min(1),
+  summaryId: z.string().optional().or(z.literal("")),
   avatarUrl: z.string().url().optional().or(z.literal("")),
 });
+
+function revalidateProfile() {
+  for (const path of ["/", "/id", "/about", "/id/about", "/contact", "/id/contact", "/admin/profile"]) {
+    revalidatePath(path);
+  }
+}
 
 export async function saveProfile(formData: FormData) {
   await requireAdmin();
@@ -29,24 +36,22 @@ export async function saveProfile(formData: FormData) {
     github: formData.get("github"),
     linkedin: formData.get("linkedin"),
     summary: formData.get("summary"),
+    summaryId: formData.get("summaryId") || "",
     avatarUrl: formData.get("avatarUrl") || "",
   });
 
   const existing = await prisma.profile.findFirst();
+  const payload = {
+    ...data,
+    summaryId: data.summaryId || null,
+    avatarUrl: data.avatarUrl || null,
+  };
 
   if (existing) {
-    await prisma.profile.update({
-      where: { id: existing.id },
-      data: { ...data, avatarUrl: data.avatarUrl || null },
-    });
+    await prisma.profile.update({ where: { id: existing.id }, data: payload });
   } else {
-    await prisma.profile.create({
-      data: { ...data, avatarUrl: data.avatarUrl || null },
-    });
+    await prisma.profile.create({ data: payload });
   }
 
-  revalidatePath("/");
-  revalidatePath("/about");
-  revalidatePath("/contact");
-  revalidatePath("/admin/profile");
+  revalidateProfile();
 }

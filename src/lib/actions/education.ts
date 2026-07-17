@@ -11,36 +11,38 @@ const schema = z.object({
   program: z.string().min(1),
   period: z.string().min(1),
   note: z.string().optional().or(z.literal("")),
+  noteId: z.string().optional().or(z.literal("")),
   order: z.coerce.number().int().default(0),
 });
 
 function revalidateEducation() {
-  revalidatePath("/about");
-  revalidatePath("/admin/education");
+  for (const path of ["/about", "/id/about", "/admin/education"]) {
+    revalidatePath(path);
+  }
 }
 
-function parseForm(formData: FormData) {
-  return schema.parse({
+function buildPayload(formData: FormData) {
+  const data = schema.parse({
     school: formData.get("school"),
     program: formData.get("program"),
     period: formData.get("period"),
     note: formData.get("note") || "",
+    noteId: formData.get("noteId") || "",
     order: formData.get("order") || 0,
   });
+  return { ...data, note: data.note || null, noteId: data.noteId || null };
 }
 
 export async function createEducation(formData: FormData) {
   await requireAdmin();
-  const data = parseForm(formData);
-  await prisma.education.create({ data: { ...data, note: data.note || null } });
+  await prisma.education.create({ data: buildPayload(formData) });
   revalidateEducation();
   redirect("/admin/education");
 }
 
 export async function updateEducation(id: string, formData: FormData) {
   await requireAdmin();
-  const data = parseForm(formData);
-  await prisma.education.update({ where: { id }, data: { ...data, note: data.note || null } });
+  await prisma.education.update({ where: { id }, data: buildPayload(formData) });
   revalidateEducation();
   redirect("/admin/education");
 }

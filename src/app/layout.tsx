@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
+import { getLocale } from "next-intl/server";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
-import { SiteHeader } from "@/components/organisms/site-header";
-import { SiteFooter } from "@/components/organisms/site-footer";
 
 const plexSans = IBM_Plex_Sans({
   variable: "--font-sans",
@@ -22,27 +21,27 @@ const plexMono = IBM_Plex_Mono({
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Gregorius Verli Giga Winarno — Fullstack JavaScript Developer",
+  title: "Gregorius Verli Giga Winarno - Fullstack JavaScript Developer",
   description:
     "Portofolio of Gregorius Verli Giga Winarno, a fullstack JavaScript developer specializing in React, Next.js and Node.js.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
+
   return (
     <html
-      lang="en"
+      lang={locale}
       suppressHydrationWarning
       className={`${plexSans.variable} ${plexMono.variable} h-full antialiased`}
     >
       <body className="ambient-glow flex min-h-full flex-col bg-background text-foreground">
         <ThemeProvider attribute="class" defaultTheme="dark" themes={["light", "dark"]}>
-          <SiteHeader />
-          <main className="flex-1">{children}</main>
-          <SiteFooter />
+          {children}
         </ThemeProvider>
       </body>
     </html>

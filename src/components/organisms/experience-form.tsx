@@ -2,6 +2,7 @@ import type { Experience } from "@/generated/prisma/client";
 import { arrayToCsv, arrayToLines, subProjectsToLines } from "@/lib/actions/parse";
 import { toDateInputValue } from "@/lib/format";
 import { FormField, FieldLabel } from "@/components/molecules/form-field";
+import { LocalizedTextareaField } from "@/components/molecules/localized-textarea-field";
 import { Textarea } from "@/components/atoms/textarea";
 import { Button } from "@/components/atoms/button";
 
@@ -48,15 +49,20 @@ export function ExperienceForm({
         />
       </div>
 
-      <FieldLabel label="Bullets (one per line)">
-        <Textarea name="bullets" rows={5} defaultValue={arrayToLines(experience?.bullets)} />
-      </FieldLabel>
+      <LocalizedTextareaField
+        label="Bullets (one per line)"
+        nameEn="bullets"
+        nameId="bulletsId"
+        defaultValueEn={arrayToLines(experience?.bullets)}
+        defaultValueId={arrayToLines(experience?.bulletsId)}
+        rows={5}
+      />
 
       <FieldLabel label="Tech stack (comma separated)">
         <Textarea name="techStack" rows={2} defaultValue={arrayToCsv(experience?.techStack)} />
       </FieldLabel>
 
-      <FieldLabel label="Sub-projects (optional — one per line, format: Name | Tech, Tech2)">
+      <FieldLabel label="Sub-projects (optional - one per line, format: Name | Tech, Tech2)">
         <Textarea
           name="subProjects"
           rows={4}

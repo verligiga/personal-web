@@ -1,13 +1,23 @@
+import { getTranslations } from "next-intl/server";
 import type { Experience } from "@/generated/prisma/client";
 import { asStringArray, asSubProjects, formatPeriod } from "@/lib/format";
+import { localized } from "@/lib/i18n";
 import { Reveal } from "@/components/atoms/reveal";
 import { Tag } from "@/components/atoms/tag";
 
-export function ExperienceTimeline({ experience }: { experience: Experience[] }) {
+export async function ExperienceTimeline({
+  experience,
+  locale,
+}: {
+  experience: Experience[];
+  locale: string;
+}) {
+  const t = await getTranslations("Experience");
+
   return (
     <div className="flex flex-col">
       {experience.map((job, i) => {
-        const bullets = asStringArray(job.bullets);
+        const bullets = asStringArray(localized(locale, job.bullets, job.bulletsId));
         const techStack = asStringArray(job.techStack);
         const subProjects = asSubProjects(job.subProjects);
         const current = job.endDate === null;
@@ -24,7 +34,7 @@ export function ExperienceTimeline({ experience }: { experience: Experience[] })
                 </p>
                 {current && (
                   <span className="mt-3 inline-block border border-primary px-2 py-0.5 font-mono text-2xs tracking-widest text-primary">
-                    CURRENT
+                    {t("current").toUpperCase()}
                   </span>
                 )}
               </div>
@@ -47,7 +57,7 @@ export function ExperienceTimeline({ experience }: { experience: Experience[] })
                 <ul className="mt-5 flex flex-col gap-2">
                   {bullets.map((point) => (
                     <li key={point} className="flex gap-3 text-sm leading-relaxed text-foreground">
-                      <span className="text-muted-foreground">—</span>
+                      <span className="text-muted-foreground">-</span>
                       {point}
                     </li>
                   ))}
@@ -65,8 +75,8 @@ export function ExperienceTimeline({ experience }: { experience: Experience[] })
                 )}
 
                 <div className="mt-6 flex flex-wrap gap-2">
-                  {techStack.map((t) => (
-                    <Tag key={t}>{t}</Tag>
+                  {techStack.map((tech) => (
+                    <Tag key={tech}>{tech}</Tag>
                   ))}
                 </div>
               </div>
