@@ -1,0 +1,110 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Profile {
+  id        String   @id @default(cuid())
+  name      String
+  role      String
+  location  String
+  email     String
+  phone     String
+  github    String
+  linkedin  String
+  summary   String   @db.Text
+  avatarUrl String?
+  updatedAt DateTime @updatedAt
+}
+
+model Experience {
+  id           String    @id @default(cuid())
+  role         String
+  company      String
+  companyUrl   String?
+  startDate    DateTime
+  endDate      DateTime?
+  order        Int       @default(0)
+  bullets      Json
+  techStack    Json
+  subProjects  Json?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([order])
+}
+
+model Project {
+  id            String   @id @default(cuid())
+  slug          String   @unique
+  title         String
+  summary       String
+  description   String   @db.Text
+  coverImageUrl String?
+  screenshots   Json?
+  techStack     Json
+  liveUrl       String?
+  repoUrl       String?
+  year          String?
+  featured      Boolean  @default(false)
+  order         Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([order])
+}
+
+model SkillCategory {
+  id     String  @id @default(cuid())
+  label  String
+  order  Int     @default(0)
+  skills Skill[]
+
+  @@index([order])
+}
+
+model Skill {
+  id         String        @id @default(cuid())
+  name       String
+  order      Int           @default(0)
+  category   SkillCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId String
+
+  @@index([categoryId, order])
+}
+
+model Education {
+  id      String @id @default(cuid())
+  school  String
+  program String
+  period  String
+  note    String?
+  order   Int    @default(0)
+
+  @@index([order])
+}
+
+model OrganizationRole {
+  id      String @id @default(cuid())
+  role    String
+  org     String
+  period  String
+  bullets Json
+  order   Int    @default(0)
+
+  @@index([order])
+}
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+}
