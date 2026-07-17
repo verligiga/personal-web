@@ -4,6 +4,7 @@ import { useEffect, useState, useTransition } from "react";
 import Image from "next/image";
 import { deleteMedia, listMedia, type MediaItem } from "@/lib/actions/media";
 import { CornerTicks } from "@/components/atoms/corner-ticks";
+import { FigureLabel } from "@/components/atoms/figure-label";
 
 export function MediaPickerDialog({
   onSelect,
@@ -49,9 +50,9 @@ export function MediaPickerDialog({
 
         <div className="mb-6 flex items-start justify-between gap-4">
           <div>
-            <p className="mb-1 font-mono text-2xs tracking-widest text-rust">
-              FIG. U1 - MEDIA LIBRARY
-            </p>
+            <FigureLabel fig="U1" className="mb-1 block">
+              MEDIA LIBRARY
+            </FigureLabel>
             <h2 className="font-mono text-lg text-foreground">Choose existing file</h2>
           </div>
           <button

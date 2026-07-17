@@ -5,6 +5,7 @@ import Cropper, { type Area } from "react-easy-crop";
 import { getCroppedImageBlob } from "@/lib/crop-image";
 import { Button } from "@/components/atoms/button";
 import { CornerTicks } from "@/components/atoms/corner-ticks";
+import { FigureLabel } from "@/components/atoms/figure-label";
 
 export function ImageCropDialog({
   file,
@@ -48,7 +49,9 @@ export function ImageCropDialog({
       <div className="relative w-full max-w-lg border border-dashed border-border bg-(--panel-surface) p-6">
         <CornerTicks />
 
-        <p className="mb-1 font-mono text-2xs tracking-widest text-rust">FIG. U0 - CROP IMAGE</p>
+        <FigureLabel fig="U0" className="mb-1 block">
+          CROP IMAGE
+        </FigureLabel>
         <h2 className="mb-6 font-mono text-lg text-foreground">Adjust framing</h2>
 
         <div className="relative h-72 w-full overflow-hidden border border-dashed border-border">
