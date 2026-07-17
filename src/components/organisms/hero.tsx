@@ -3,7 +3,7 @@ import Image from "next/image";
 import type { Profile } from "@/generated/prisma/client";
 import { FigureLabel } from "@/components/atoms/figure-label";
 import { Reveal } from "@/components/atoms/reveal";
-import { CornerTicks } from "@/components/atoms/corner-ticks";
+import { CVDownloadButton } from "@/components/atoms/cv-download-button";
 
 export function Hero({ profile }: { profile: Profile }) {
   return (
@@ -11,14 +11,13 @@ export function Hero({ profile }: { profile: Profile }) {
       <div className="flex flex-col gap-8 sm:flex-row sm:items-start">
         {profile.avatarUrl && (
           <Reveal>
-            <div className="relative h-64 w-48 shrink-0 overflow-hidden border border-dashed border-border sm:h-80 sm:w-60 lg:h-96 lg:w-72">
-              <CornerTicks />
+            <div className="relative h-64 w-48 shrink-0 overflow-hidden rounded-lg sm:h-80 sm:w-60 lg:h-96 lg:w-72">
               <Image
                 src={profile.avatarUrl}
                 alt={profile.name}
                 fill
                 unoptimized
-                className="object-cover grayscale transition-[filter] duration-500 ease-out will-change-[filter] hover:grayscale-0"
+                className="object-cover scale-100 brightness-110 dark:brightness-100 grayscale transition-all duration-500 ease-in-out will-change-[filter,transform,opacity] hover:grayscale-0 hover:brightness-125 dark:hover:brightness-110 hover:scale-105"
                 priority
               />
             </div>
@@ -52,6 +51,7 @@ export function Hero({ profile }: { profile: Profile }) {
               >
                 VIEW EXPERIENCE
               </Link>
+              <CVDownloadButton />
               <Link
                 href="/contact"
                 className="border border-dashed border-border px-6 py-3 font-mono text-2xs tracking-widest text-foreground transition-all duration-200 hover:border-primary"

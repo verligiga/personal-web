@@ -29,28 +29,28 @@
    (navy ground, cyan linework) and a light "drafting paper" print (pale
    ground, ink-blue linework). Same identity, opposite polarity. */
 :root {
-  --background: #f4f7fb;
+  --background: #dde6f0;
   --foreground: #0f1f33;
-  --card: #ffffff;
+  --card: #f7fafc;
   --card-foreground: #0f1f33;
-  --primary: #0369a1;
+  --primary: #045f8c;
   --primary-foreground: #ffffff;
-  --secondary: #e7eef6;
+  --secondary: #cddbe8;
   --secondary-foreground: #0f1f33;
-  --muted: #eaf0f6;
-  --muted-foreground: #55677c;
-  --accent: #e7eef6;
-  --accent-foreground: #0369a1;
-  --destructive: #dc2626;
-  --border: rgba(15, 31, 51, 0.14);
-  --input: rgba(15, 31, 51, 0.14);
-  --ring: #0369a1;
+  --muted: #d3e0ec;
+  --muted-foreground: #4a5b70;
+  --accent: #cddbe8;
+  --accent-foreground: #045f8c;
+  --destructive: #b91c1c;
+  --border: rgba(15, 31, 51, 0.16);
+  --input: rgba(15, 31, 51, 0.16);
+  --ring: #045f8c;
   --radius: 0.25rem;
 
   /* blueprint-specific tokens */
-  --glow: rgba(3, 105, 161, 0.06);
-  --rust: #c2410c;
-  --panel-surface: rgba(231, 238, 246, 0.7);
+  --glow: rgba(4, 95, 140, 0.08);
+  --rust: #9a3412;
+  --panel-surface: rgba(255, 255, 255, 0.55);
 }
 
 .dark {

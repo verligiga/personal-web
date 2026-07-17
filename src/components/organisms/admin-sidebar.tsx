@@ -11,6 +11,7 @@ const links = [
   { href: "/admin/skills", label: "Skills" },
   { href: "/admin/education", label: "Education" },
   { href: "/admin/organization", label: "Organization" },
+  { href: "/admin/cv", label: "CV" },
 ];
 
 export function AdminSidebar({
