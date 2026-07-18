@@ -17,7 +17,7 @@ export function Hero({ profile }: { profile: Profile }) {
       <div className="flex flex-col gap-8 sm:flex-row sm:items-start">
         {profile.avatarUrl && (
           <Reveal>
-            <div className="relative mx-auto h-120 w-96 shrink-0 overflow-hidden rounded-lg sm:mx-0 sm:h-80 sm:w-60 lg:h-96 lg:w-72">
+            <div className="relative mx-auto aspect-4/5 w-full max-w-xs shrink-0 overflow-hidden rounded-lg sm:mx-0 sm:aspect-auto sm:h-80 sm:w-60 lg:h-96 lg:w-72">
               <Image
                 src={profile.avatarUrl}
                 alt={profile.name}

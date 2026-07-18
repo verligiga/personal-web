@@ -1,10 +1,12 @@
+"use client";
+
+import { motion } from "motion/react";
 import { Tag } from "@/components/atoms/tag";
-import { Reveal } from "@/components/atoms/reveal";
 
 export function TagList({
   items,
   variant = "default",
-  className = "flex flex-wrap gap-2",
+  className = "flex flex-wrap justify-start gap-2",
   stagger = true,
 }: {
   items: string[];
@@ -16,9 +18,14 @@ export function TagList({
     <ul className={className}>
       {items.map((item, i) =>
         stagger ? (
-          <Reveal as="li" key={item} delay={i * 0.03} y={8}>
+          <motion.li
+            key={item}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: i * 0.03, ease: "easeOut" }}
+          >
             <Tag variant={variant}>{item}</Tag>
-          </Reveal>
+          </motion.li>
         ) : (
           <li key={item}>
             <Tag variant={variant}>{item}</Tag>
