@@ -12,7 +12,7 @@ export function PageShell({
   return (
     <div
       className={cn(
-        "mx-auto px-6 py-20 lg:px-10",
+        "mx-auto px-6 py-2 md:py-20 lg:px-10",
         narrow ? "max-w-4xl" : "max-w-6xl",
         className,
       )}

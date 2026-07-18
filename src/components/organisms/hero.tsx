@@ -13,11 +13,11 @@ export function Hero({ profile }: { profile: Profile }) {
   const summary = localized(locale, profile.summary, profile.summaryId);
 
   return (
-    <section className="flex min-h-[70vh] flex-col justify-center py-20">
+    <section className="flex min-h-[70vh] flex-col justify-center md:py-20">
       <div className="flex flex-col gap-8 sm:flex-row sm:items-start">
         {profile.avatarUrl && (
           <Reveal>
-            <div className="relative h-64 w-48 shrink-0 overflow-hidden rounded-lg sm:h-80 sm:w-60 lg:h-96 lg:w-72">
+            <div className="relative mx-auto h-120 w-96 shrink-0 overflow-hidden rounded-lg sm:mx-0 sm:h-80 sm:w-60 lg:h-96 lg:w-72">
               <Image
                 src={profile.avatarUrl}
                 alt={profile.name}
@@ -49,17 +49,17 @@ export function Hero({ profile }: { profile: Profile }) {
           </Reveal>
 
           <Reveal delay={0.24}>
-            <div className="mt-10 flex flex-wrap gap-3">
+            <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <Link
                 href="/experience"
-                className="border border-primary px-6 py-3 font-mono text-2xs tracking-widest text-primary transition-all duration-200 hover:bg-primary hover:text-primary-foreground"
+                className="border border-primary px-6 py-3 text-center font-mono text-2xs tracking-widest text-primary transition-all duration-200 hover:bg-primary hover:text-primary-foreground sm:text-left"
               >
                 {t("viewExperience").toUpperCase()}
               </Link>
               <CVDownloadButton />
               <Link
                 href="/contact"
-                className="border border-dashed border-border px-6 py-3 font-mono text-2xs tracking-widest text-foreground transition-all duration-200 hover:border-primary"
+                className="border border-dashed border-border px-6 py-3 text-center font-mono text-2xs tracking-widest text-foreground transition-all duration-200 hover:border-primary sm:text-left"
               >
                 {t("getInTouch").toUpperCase()}
               </Link>
