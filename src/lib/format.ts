@@ -21,16 +21,3 @@ export function toDateInputValue(date: Date | null | undefined): string {
 export function asStringArray(value: unknown): string[] {
   return Array.isArray(value) ? value.filter((v): v is string => typeof v === "string") : [];
 }
-
-export type SubProject = { name: string; tech: string };
-
-export function asSubProjects(value: unknown): SubProject[] {
-  if (!Array.isArray(value)) return [];
-  return value.filter(
-    (v): v is SubProject =>
-      typeof v === "object" &&
-      v !== null &&
-      typeof (v as SubProject).name === "string" &&
-      typeof (v as SubProject).tech === "string",
-  );
-}

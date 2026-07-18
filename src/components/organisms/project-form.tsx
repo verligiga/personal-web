@@ -1,18 +1,21 @@
-import type { Project } from "@/generated/prisma/client";
+import type { Experience, Project } from "@/generated/prisma/client";
 import { arrayToCsv } from "@/lib/actions/parse";
 import { asStringArray } from "@/lib/format";
 import { FormField, FieldLabel } from "@/components/molecules/form-field";
 import { LocalizedTextareaField } from "@/components/molecules/localized-textarea-field";
 import { Textarea } from "@/components/atoms/textarea";
+import { Select } from "@/components/atoms/select";
 import { Button } from "@/components/atoms/button";
 import { ImageUploadField } from "@/components/organisms/image-upload-field";
 import { GalleryField } from "@/components/organisms/gallery-field";
 
 export function ProjectForm({
   project,
+  experiences,
   action,
 }: {
   project?: Project;
+  experiences: Pick<Experience, "id" | "role" | "company">[];
   action: (formData: FormData) => void;
 }) {
   return (
@@ -46,6 +49,17 @@ export function ProjectForm({
 
       <FieldLabel label="Tech stack (comma separated)">
         <Textarea name="techStack" rows={2} defaultValue={arrayToCsv(project?.techStack)} />
+      </FieldLabel>
+
+      <FieldLabel label="Related experience (optional)">
+        <Select name="experienceId" defaultValue={project?.experienceId ?? ""}>
+          <option value="">None</option>
+          {experiences.map((exp) => (
+            <option key={exp.id} value={exp.id}>
+              {exp.role} - {exp.company}
+            </option>
+          ))}
+        </Select>
       </FieldLabel>
 
       <div className="grid gap-5 sm:grid-cols-2">

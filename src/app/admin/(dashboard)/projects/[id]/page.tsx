@@ -9,7 +9,13 @@ export default async function EditProjectPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const project = await prisma.project.findUnique({ where: { id } });
+  const [project, experiences] = await Promise.all([
+    prisma.project.findUnique({ where: { id } }),
+    prisma.experience.findMany({
+      orderBy: { order: "asc" },
+      select: { id: true, role: true, company: true },
+    }),
+  ]);
   if (!project) notFound();
 
   const action = updateProject.bind(null, id);
@@ -17,7 +23,7 @@ export default async function EditProjectPage({
   return (
     <div>
       <h1 className="mb-8 font-mono text-2xl text-foreground">Edit project</h1>
-      <ProjectForm project={project} action={action} />
+      <ProjectForm project={project} experiences={experiences} action={action} />
     </div>
   );
 }

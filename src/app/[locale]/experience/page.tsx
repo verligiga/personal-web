@@ -24,7 +24,10 @@ export default async function ExperiencePage({
   setRequestLocale(locale);
 
   const [experience, t] = await Promise.all([
-    prisma.experience.findMany({ orderBy: { order: "asc" } }),
+    prisma.experience.findMany({
+      orderBy: { order: "asc" },
+      include: { projects: { orderBy: { order: "asc" } } },
+    }),
     getTranslations("Experience"),
   ]);
 

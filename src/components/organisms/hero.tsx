@@ -19,7 +19,6 @@ export function Hero({ profile }: { profile: Profile }) {
                 src={profile.avatarUrl}
                 alt={profile.name}
                 fill
-                unoptimized
                 className="object-cover scale-100 brightness-110 dark:brightness-100 grayscale transition-all duration-500 ease-in-out will-change-[filter,transform,opacity] hover:grayscale-0 hover:brightness-125 dark:hover:brightness-110 hover:scale-105"
                 priority
               />

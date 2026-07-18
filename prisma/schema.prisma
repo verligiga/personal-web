@@ -36,7 +36,7 @@ model Experience {
   bullets      Json
   bulletsId    Json?
   techStack    Json
-  subProjects  Json?
+  projects     Project[]
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
 
@@ -44,25 +44,28 @@ model Experience {
 }
 
 model Project {
-  id            String   @id @default(cuid())
-  slug          String   @unique
+  id            String      @id @default(cuid())
+  slug          String      @unique
   title         String
   summary       String
   summaryId     String?
-  description   String   @db.Text
-  descriptionId String?  @db.Text
+  description   String      @db.Text
+  descriptionId String?     @db.Text
   coverImageUrl String?
   screenshots   Json?
   techStack     Json
   liveUrl       String?
   repoUrl       String?
   year          String?
-  featured      Boolean  @default(false)
-  order         Int      @default(0)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  featured      Boolean     @default(false)
+  order         Int         @default(0)
+  experience    Experience? @relation(fields: [experienceId], references: [id], onDelete: SetNull)
+  experienceId  String?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
 
   @@index([order])
+  @@index([experienceId])
 }
 
 model SkillCategory {

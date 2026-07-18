@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/actions/require-admin";
-import { csvToArray, linesToArray, parseSubProjects } from "@/lib/actions/parse";
+import { csvToArray, linesToArray } from "@/lib/actions/parse";
 
 const baseSchema = z.object({
   role: z.string().min(1),
@@ -27,7 +27,6 @@ function parseTranslatedFields(formData: FormData) {
     bullets: linesToArray(formData.get("bullets")),
     bulletsId: linesToArray(formData.get("bulletsId")),
     techStack: csvToArray(formData.get("techStack")),
-    subProjects: parseSubProjects(formData.get("subProjects")),
   };
 }
 

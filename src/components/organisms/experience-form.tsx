@@ -1,5 +1,5 @@
 import type { Experience } from "@/generated/prisma/client";
-import { arrayToCsv, arrayToLines, subProjectsToLines } from "@/lib/actions/parse";
+import { arrayToCsv, arrayToLines } from "@/lib/actions/parse";
 import { toDateInputValue } from "@/lib/format";
 import { FormField, FieldLabel } from "@/components/molecules/form-field";
 import { LocalizedTextareaField } from "@/components/molecules/localized-textarea-field";
@@ -62,13 +62,9 @@ export function ExperienceForm({
         <Textarea name="techStack" rows={2} defaultValue={arrayToCsv(experience?.techStack)} />
       </FieldLabel>
 
-      <FieldLabel label="Sub-projects (optional - one per line, format: Name | Tech, Tech2)">
-        <Textarea
-          name="subProjects"
-          rows={4}
-          defaultValue={subProjectsToLines(experience?.subProjects)}
-        />
-      </FieldLabel>
+      <p className="font-mono text-2xs text-muted-foreground">
+        Related projects are linked from each project&apos;s own edit page, not here.
+      </p>
 
       <Button type="submit" className="mt-2 w-fit font-mono text-2xs tracking-widest">
         SAVE

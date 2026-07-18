@@ -1,7 +1,8 @@
 import { getTranslations } from "next-intl/server";
-import type { Experience } from "@/generated/prisma/client";
-import { asStringArray, asSubProjects, formatPeriod } from "@/lib/format";
+import type { Experience, Project } from "@/generated/prisma/client";
+import { asStringArray, formatPeriod } from "@/lib/format";
 import { localized } from "@/lib/i18n";
+import { Link } from "@/i18n/navigation";
 import { Reveal } from "@/components/atoms/reveal";
 import { Tag } from "@/components/atoms/tag";
 
@@ -9,7 +10,7 @@ export async function ExperienceTimeline({
   experience,
   locale,
 }: {
-  experience: Experience[];
+  experience: (Experience & { projects: Project[] })[];
   locale: string;
 }) {
   const t = await getTranslations("Experience");
@@ -19,7 +20,6 @@ export async function ExperienceTimeline({
       {experience.map((job, i) => {
         const bullets = asStringArray(localized(locale, job.bullets, job.bulletsId));
         const techStack = asStringArray(job.techStack);
-        const subProjects = asSubProjects(job.subProjects);
         const current = job.endDate === null;
 
         return (
@@ -63,13 +63,21 @@ export async function ExperienceTimeline({
                   ))}
                 </ul>
 
-                {subProjects.length > 0 && (
+                {job.projects.length > 0 && (
                   <div className="mt-6 flex flex-col gap-3">
-                    {subProjects.map((p) => (
-                      <div key={p.name} className="border-l-2 border-dashed border-border pl-4">
-                        <p className="text-sm text-foreground">{p.name}</p>
-                        <p className="font-mono text-2xs text-muted-foreground">{p.tech}</p>
-                      </div>
+                    {job.projects.map((p) => (
+                      <Link
+                        key={p.id}
+                        href={`/projects/${p.slug}`}
+                        className="group border-l-2 border-dashed border-border pl-4 transition-colors hover:border-primary"
+                      >
+                        <p className="text-sm text-foreground group-hover:text-primary">
+                          {p.title} ↗
+                        </p>
+                        <p className="font-mono text-2xs text-muted-foreground">
+                          {asStringArray(p.techStack).join(", ")}
+                        </p>
+                      </Link>
                     ))}
                   </div>
                 )}

@@ -23,6 +23,7 @@ const baseSchema = z.object({
   year: z.string().optional().or(z.literal("")),
   featured: z.boolean(),
   order: z.coerce.number().int().default(0),
+  experienceId: z.string().optional().or(z.literal("")),
 });
 
 function revalidateProjects(slug?: string) {
@@ -49,6 +50,7 @@ function parseForm(formData: FormData) {
     year: formData.get("year") || "",
     featured: formData.get("featured") === "on",
     order: formData.get("order") || 0,
+    experienceId: formData.get("experienceId") || "",
   });
 }
 
@@ -62,6 +64,7 @@ function buildPayload(formData: FormData) {
     liveUrl: data.liveUrl || null,
     repoUrl: data.repoUrl || null,
     year: data.year || null,
+    experienceId: data.experienceId || null,
     techStack: csvToArray(formData.get("techStack")),
     screenshots: parseJsonStringArray(formData.get("screenshots")),
   };
