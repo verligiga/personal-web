@@ -3,6 +3,7 @@ import { IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import { getLocale } from "next-intl/server";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
+import { prisma } from "@/lib/prisma";
 
 const plexSans = IBM_Plex_Sans({
   variable: "--font-sans",
@@ -20,11 +21,21 @@ const plexMono = IBM_Plex_Mono({
 // on request rather than being statically prerendered at build time.
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
-  title: "Gregorius Verli Giga Winarno - Fullstack JavaScript Developer",
-  description:
-    "Portofolio of Gregorius Verli Giga Winarno, a fullstack JavaScript developer specializing in React, Next.js and Node.js.",
-};
+const title = "Gregorius Verli Giga Winarno - Fullstack JavaScript Developer";
+const description =
+  "Portofolio of Gregorius Verli Giga Winarno, a fullstack JavaScript developer specializing in React, Next.js and Node.js.";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const profile = await prisma.profile.findFirst();
+  const images = profile?.avatarUrl ? [{ url: profile.avatarUrl }] : undefined;
+
+  return {
+    title,
+    description,
+    openGraph: { title, description, images, type: "website" },
+    twitter: { card: "summary_large_image", title, description, images },
+  };
+}
 
 export default async function RootLayout({
   children,
