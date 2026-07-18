@@ -5,12 +5,14 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/actions/require-admin";
-import { csvToArray, linesToArray } from "@/lib/actions/parse";
+import { linesToArray } from "@/lib/actions/parse";
 
 const baseSchema = z.object({
   role: z.string().min(1),
   company: z.string().min(1),
   companyUrl: z.string().url().optional().or(z.literal("")),
+  location: z.string().optional().or(z.literal("")),
+  workType: z.string().optional().or(z.literal("")),
   startDate: z.coerce.date(),
   endDate: z.coerce.date().optional().or(z.literal("")),
   order: z.coerce.number().int().default(0),
@@ -26,7 +28,7 @@ function parseTranslatedFields(formData: FormData) {
   return {
     bullets: linesToArray(formData.get("bullets")),
     bulletsId: linesToArray(formData.get("bulletsId")),
-    techStack: csvToArray(formData.get("techStack")),
+    roleId: (formData.get("roleId") as string) || null,
   };
 }
 
@@ -37,6 +39,8 @@ export async function createExperience(formData: FormData) {
     role: formData.get("role"),
     company: formData.get("company"),
     companyUrl: formData.get("companyUrl") || "",
+    location: formData.get("location") || "",
+    workType: formData.get("workType") || "",
     startDate: formData.get("startDate"),
     endDate: formData.get("endDate") || "",
     order: formData.get("order") || 0,
@@ -47,6 +51,8 @@ export async function createExperience(formData: FormData) {
       role: data.role,
       company: data.company,
       companyUrl: data.companyUrl || null,
+      location: data.location || null,
+      workType: data.workType || null,
       startDate: data.startDate,
       endDate: data.endDate || null,
       order: data.order,
@@ -65,6 +71,8 @@ export async function updateExperience(id: string, formData: FormData) {
     role: formData.get("role"),
     company: formData.get("company"),
     companyUrl: formData.get("companyUrl") || "",
+    location: formData.get("location") || "",
+    workType: formData.get("workType") || "",
     startDate: formData.get("startDate"),
     endDate: formData.get("endDate") || "",
     order: formData.get("order") || 0,
@@ -76,6 +84,8 @@ export async function updateExperience(id: string, formData: FormData) {
       role: data.role,
       company: data.company,
       companyUrl: data.companyUrl || null,
+      location: data.location || null,
+      workType: data.workType || null,
       startDate: data.startDate,
       endDate: data.endDate || null,
       order: data.order,

@@ -1,6 +1,7 @@
 import Image from "next/image";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import type { Profile } from "@/generated/prisma/client";
+import { localized } from "@/lib/i18n";
 import { Link } from "@/i18n/navigation";
 import { FigureLabel } from "@/components/atoms/figure-label";
 import { Reveal } from "@/components/atoms/reveal";
@@ -8,6 +9,8 @@ import { CVDownloadButton } from "@/components/atoms/cv-download-button";
 
 export function Hero({ profile }: { profile: Profile }) {
   const t = useTranslations("Hero");
+  const locale = useLocale();
+  const summary = localized(locale, profile.summary, profile.summaryId);
 
   return (
     <section className="flex min-h-[70vh] flex-col justify-center py-20">
@@ -40,8 +43,8 @@ export function Hero({ profile }: { profile: Profile }) {
           </Reveal>
 
           <Reveal delay={0.16}>
-            <p className="mt-8 max-w-xl text-sm leading-relaxed text-foreground">
-              {profile.summary}
+            <p className="mt-8 max-w-xl whitespace-pre-line text-sm leading-relaxed text-foreground">
+              {summary}
             </p>
           </Reveal>
 

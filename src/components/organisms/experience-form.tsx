@@ -1,9 +1,9 @@
 import type { Experience } from "@/generated/prisma/client";
-import { arrayToCsv, arrayToLines } from "@/lib/actions/parse";
+import { arrayToLines } from "@/lib/actions/parse";
 import { toDateInputValue } from "@/lib/format";
 import { FormField, FieldLabel } from "@/components/molecules/form-field";
 import { LocalizedTextareaField } from "@/components/molecules/localized-textarea-field";
-import { Textarea } from "@/components/atoms/textarea";
+import { Select } from "@/components/atoms/select";
 import { Button } from "@/components/atoms/button";
 
 export function ExperienceForm({
@@ -15,10 +15,16 @@ export function ExperienceForm({
 }) {
   return (
     <form action={action} className="flex max-w-2xl flex-col gap-5">
-      <div className="grid gap-5 sm:grid-cols-2">
-        <FormField label="Role" name="role" defaultValue={experience?.role} />
-        <FormField label="Company" name="company" defaultValue={experience?.company} />
-      </div>
+      <LocalizedTextareaField
+        label="Role"
+        nameEn="role"
+        nameId="roleId"
+        defaultValueEn={experience?.role}
+        defaultValueId={experience?.roleId}
+        rows={1}
+      />
+
+      <FormField label="Company" name="company" defaultValue={experience?.company} />
 
       <FormField
         label="Company URL (optional)"
@@ -26,6 +32,23 @@ export function ExperienceForm({
         defaultValue={experience?.companyUrl ?? ""}
         required={false}
       />
+
+      <div className="grid gap-5 sm:grid-cols-2">
+        <FormField
+          label="Location (optional)"
+          name="location"
+          defaultValue={experience?.location ?? ""}
+          required={false}
+        />
+        <FieldLabel label="Work type (optional)">
+          <Select name="workType" defaultValue={experience?.workType ?? ""}>
+            <option value="">Not specified</option>
+            <option value="On-site">On-site</option>
+            <option value="Remote">Remote</option>
+            <option value="Hybrid">Hybrid</option>
+          </Select>
+        </FieldLabel>
+      </div>
 
       <div className="grid gap-5 sm:grid-cols-3">
         <FormField
@@ -58,12 +81,9 @@ export function ExperienceForm({
         rows={5}
       />
 
-      <FieldLabel label="Tech stack (comma separated)">
-        <Textarea name="techStack" rows={2} defaultValue={arrayToCsv(experience?.techStack)} />
-      </FieldLabel>
-
       <p className="font-mono text-2xs text-muted-foreground">
-        Related projects are linked from each project&apos;s own edit page, not here.
+        Tech stack is derived from linked projects, and related projects are linked from each
+        project&apos;s own edit page, not here.
       </p>
 
       <Button type="submit" className="mt-2 w-fit font-mono text-2xs tracking-widest">

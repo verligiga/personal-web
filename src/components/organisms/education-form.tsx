@@ -13,7 +13,16 @@ export function EducationForm({
   return (
     <form action={action} className="flex max-w-xl flex-col gap-5">
       <FormField label="School" name="school" defaultValue={education?.school} />
-      <FormField label="Program" name="program" defaultValue={education?.program} />
+
+      <LocalizedTextareaField
+        label="Program"
+        nameEn="program"
+        nameId="programId"
+        defaultValueEn={education?.program}
+        defaultValueId={education?.programId}
+        rows={1}
+      />
+
       <FormField label="Period" name="period" defaultValue={education?.period} />
 
       <LocalizedTextareaField

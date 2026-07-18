@@ -30,6 +30,15 @@ export default async function AdminProfilePage() {
           rows={6}
         />
 
+        <LocalizedTextareaField
+          label="Story (optional - shown as a 'My Journey' section on the About page)"
+          nameEn="story"
+          nameId="storyId"
+          defaultValueEn={profile?.story}
+          defaultValueId={profile?.storyId}
+          rows={12}
+        />
+
         <ImageUploadField
           name="avatarUrl"
           label="Avatar"

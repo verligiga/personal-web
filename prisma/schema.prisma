@@ -21,6 +21,8 @@ model Profile {
   linkedin  String
   summary   String   @db.Text
   summaryId String?  @db.Text
+  story     String?  @db.Text
+  storyId   String?  @db.Text
   avatarUrl String?
   updatedAt DateTime @updatedAt
 }
@@ -28,14 +30,16 @@ model Profile {
 model Experience {
   id           String    @id @default(cuid())
   role         String
+  roleId       String?
   company      String
   companyUrl   String?
+  location     String?
+  workType     String?
   startDate    DateTime
   endDate      DateTime?
   order        Int       @default(0)
   bullets      Json
   bulletsId    Json?
-  techStack    Json
   projects     Project[]
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
@@ -88,13 +92,14 @@ model Skill {
 }
 
 model Education {
-  id      String @id @default(cuid())
-  school  String
-  program String
-  period  String
-  note    String?
-  noteId  String?
-  order   Int    @default(0)
+  id        String @id @default(cuid())
+  school    String
+  program   String
+  programId String?
+  period    String
+  note      String?
+  noteId    String?
+  order     Int    @default(0)
 
   @@index([order])
 }
@@ -102,6 +107,7 @@ model Education {
 model OrganizationRole {
   id        String @id @default(cuid())
   role      String
+  roleId    String?
   org       String
   period    String
   bullets   Json

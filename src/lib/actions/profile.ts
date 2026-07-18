@@ -15,6 +15,8 @@ const profileSchema = z.object({
   linkedin: z.string().url(),
   summary: z.string().min(1),
   summaryId: z.string().optional().or(z.literal("")),
+  story: z.string().optional().or(z.literal("")),
+  storyId: z.string().optional().or(z.literal("")),
   avatarUrl: z.string().url().optional().or(z.literal("")),
 });
 
@@ -37,6 +39,8 @@ export async function saveProfile(formData: FormData) {
     linkedin: formData.get("linkedin"),
     summary: formData.get("summary"),
     summaryId: formData.get("summaryId") || "",
+    story: formData.get("story") || "",
+    storyId: formData.get("storyId") || "",
     avatarUrl: formData.get("avatarUrl") || "",
   });
 
@@ -44,6 +48,8 @@ export async function saveProfile(formData: FormData) {
   const payload = {
     ...data,
     summaryId: data.summaryId || null,
+    story: data.story || null,
+    storyId: data.storyId || null,
     avatarUrl: data.avatarUrl || null,
   };
 

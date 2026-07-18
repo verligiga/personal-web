@@ -35,7 +35,7 @@ export async function ProjectGrid({
                 )}
               </div>
               <h3 className="mt-3 font-mono text-lg text-foreground">{project.title}</h3>
-              <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+              <p className="mt-2 whitespace-pre-line text-xs leading-relaxed text-muted-foreground">
                 {localized(locale, project.summary, project.summaryId)}
               </p>
               <div className="mt-4 flex flex-wrap gap-1.5">

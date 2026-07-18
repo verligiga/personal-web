@@ -13,7 +13,15 @@ export function OrganizationForm({
 }) {
   return (
     <form action={action} className="flex max-w-xl flex-col gap-5">
-      <FormField label="Role" name="role" defaultValue={organizationRole?.role} />
+      <LocalizedTextareaField
+        label="Role"
+        nameEn="role"
+        nameId="roleId"
+        defaultValueEn={organizationRole?.role}
+        defaultValueId={organizationRole?.roleId}
+        rows={1}
+      />
+
       <FormField label="Organization" name="org" defaultValue={organizationRole?.org} />
       <FormField label="Period" name="period" defaultValue={organizationRole?.period} />
 

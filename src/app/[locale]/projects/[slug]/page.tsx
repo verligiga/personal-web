@@ -58,7 +58,7 @@ export default async function ProjectDetailPage({
           $ {project.year ?? ""}
         </p>
         <h1 className="mt-3 font-mono text-4xl text-foreground sm:text-5xl">{project.title}</h1>
-        <p className="mt-4 max-w-2xl text-sm text-muted-foreground">{summary}</p>
+        <p className="mt-4 max-w-2xl whitespace-pre-line text-sm text-muted-foreground">{summary}</p>
       </Reveal>
 
       {project.coverImageUrl && (

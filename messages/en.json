@@ -20,11 +20,12 @@
     "viewAllProjects": "View all projects"
   },
   "About": {
-    "title": "About",
+    "title": "About Me",
     "basedIn": "Based in",
     "email": "Email",
     "phone": "Phone",
     "role": "Role",
+    "journey": "My Journey",
     "education": "Education",
     "organization": "Organization"
   },

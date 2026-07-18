@@ -41,30 +41,38 @@ export default async function AboutPage({
     { label: t("role"), value: profile.role },
   ];
 
+  const story = localized(locale, profile.story, profile.storyId);
+
+  const factsList = facts.map((f, i) => (
+    <Reveal key={f.label} delay={i * 0.05}>
+      <div className="border-t border-dashed border-border pt-3">
+        <dt className="font-mono text-2xs tracking-widest text-muted-foreground">
+          {f.label.toUpperCase()}
+        </dt>
+        <dd className="mt-2 wrap-break-word font-mono text-sm text-foreground">{f.value}</dd>
+      </div>
+    </Reveal>
+  ));
+
   return (
     <PageShell>
       <SectionLabel fig="03" title={t("title")} />
 
-      <div className="grid gap-12 lg:grid-cols-12">
-        <Reveal className="lg:col-span-7">
-          <p className="font-mono text-xl leading-relaxed text-foreground">
-            {localized(locale, profile.summary, profile.summaryId)}
-          </p>
-        </Reveal>
+      {story ? (
+        <div className="grid gap-12 lg:grid-cols-12">
+          <Reveal className="lg:col-span-7">
+            <p className="mb-6 font-mono text-2xs tracking-widest text-rust">
+              {"// "}
+              {t("journey").toUpperCase()}
+            </p>
+            <p className="whitespace-pre-line text-sm leading-relaxed text-foreground">{story}</p>
+          </Reveal>
 
-        <dl className="grid grid-cols-2 gap-x-6 gap-y-8 lg:col-span-5 lg:pl-8">
-          {facts.map((f, i) => (
-            <Reveal key={f.label} delay={i * 0.05}>
-              <div className="border-t border-dashed border-border pt-3">
-                <dt className="font-mono text-2xs tracking-widest text-muted-foreground">
-                  {f.label.toUpperCase()}
-                </dt>
-                <dd className="mt-2 wrap-break-word font-mono text-sm text-foreground">{f.value}</dd>
-              </div>
-            </Reveal>
-          ))}
-        </dl>
-      </div>
+          <dl className="flex flex-col gap-8 lg:col-span-5 lg:pl-8">{factsList}</dl>
+        </div>
+      ) : (
+        <dl className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-4">{factsList}</dl>
+      )}
 
       <div className="mt-20 grid gap-16 lg:grid-cols-2">
         <div>
@@ -75,15 +83,18 @@ export default async function AboutPage({
           <div className="flex flex-col gap-8">
             {education.map((e, i) => {
               const note = localized(locale, e.note, e.noteId);
+              const program = localized(locale, e.program, e.programId);
               return (
                 <Reveal key={e.id} delay={i * 0.05}>
                   <div className="border-t border-dashed border-border pt-5">
                     <h3 className="font-mono text-lg text-foreground">{e.school}</h3>
-                    <p className="mt-1 text-sm text-muted-foreground">{e.program}</p>
+                    <p className="mt-1 text-sm text-muted-foreground">{program}</p>
                     <p className="mt-2 font-mono text-2xs tracking-wide text-muted-foreground">
                       {e.period}
                     </p>
-                    {note && <p className="mt-2 text-xs text-muted-foreground">{note}</p>}
+                    {note && (
+                      <p className="mt-2 whitespace-pre-line text-xs text-muted-foreground">{note}</p>
+                    )}
                   </div>
                 </Reveal>
               );
@@ -99,10 +110,11 @@ export default async function AboutPage({
           <div className="flex flex-col gap-8">
             {organization.map((o, i) => {
               const bullets = asStringArray(localized(locale, o.bullets, o.bulletsId));
+              const role = localized(locale, o.role, o.roleId);
               return (
                 <Reveal key={o.id} delay={i * 0.05}>
                   <div className="border-t border-dashed border-border pt-5">
-                    <h3 className="font-mono text-lg text-foreground">{o.role}</h3>
+                    <h3 className="font-mono text-lg text-foreground">{role}</h3>
                     <p className="mt-1 text-sm text-muted-foreground">{o.org}</p>
                     <p className="mt-2 font-mono text-2xs tracking-wide text-muted-foreground">
                       {o.period}

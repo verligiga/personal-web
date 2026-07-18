@@ -20,11 +20,12 @@
     "viewAllProjects": "Lihat semua proyek"
   },
   "About": {
-    "title": "Tentang",
-    "basedIn": "Berdomisili di",
+    "title": "Tentang Saya",
+    "basedIn": "Domisili",
     "email": "Email",
     "phone": "Telepon",
     "role": "Peran",
+    "journey": "Perjalanan Saya",
     "education": "Pendidikan",
     "organization": "Organisasi"
   },

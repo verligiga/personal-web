@@ -19,8 +19,10 @@ export async function ExperienceTimeline({
     <div className="flex flex-col">
       {experience.map((job, i) => {
         const bullets = asStringArray(localized(locale, job.bullets, job.bulletsId));
-        const techStack = asStringArray(job.techStack);
+        const techStack = Array.from(new Set(job.projects.flatMap((p) => asStringArray(p.techStack))));
         const current = job.endDate === null;
+        const locationLine = [job.location, job.workType].filter(Boolean).join(" · ");
+        const role = localized(locale, job.role, job.roleId);
 
         return (
           <Reveal key={job.id} delay={Math.min(i * 0.06, 0.3)}>
@@ -32,6 +34,11 @@ export async function ExperienceTimeline({
                 <p className="mt-2 font-mono text-2xs tracking-wide text-muted-foreground">
                   {formatPeriod(job.startDate, job.endDate)}
                 </p>
+                {locationLine && (
+                  <p className="mt-1 font-mono text-2xs tracking-wide text-muted-foreground">
+                    {locationLine}
+                  </p>
+                )}
                 {current && (
                   <span className="mt-3 inline-block border border-primary px-2 py-0.5 font-mono text-2xs tracking-widest text-primary">
                     {t("current").toUpperCase()}
@@ -40,7 +47,7 @@ export async function ExperienceTimeline({
               </div>
 
               <div className="lg:col-span-9">
-                <h3 className="font-mono text-xl text-foreground sm:text-2xl">{job.role}</h3>
+                <h3 className="font-mono text-xl text-foreground sm:text-2xl">{role}</h3>
                 {job.companyUrl ? (
                   <a
                     href={job.companyUrl}
@@ -74,8 +81,8 @@ export async function ExperienceTimeline({
                         <p className="text-sm text-foreground group-hover:text-primary">
                           {p.title} ↗
                         </p>
-                        <p className="font-mono text-2xs text-muted-foreground">
-                          {asStringArray(p.techStack).join(", ")}
+                        <p className="mt-1 whitespace-pre-line text-xs leading-relaxed text-muted-foreground">
+                          {localized(locale, p.summary, p.summaryId)}
                         </p>
                       </Link>
                     ))}

@@ -29,6 +29,7 @@ function buildPayload(formData: FormData) {
   });
   return {
     ...data,
+    roleId: (formData.get("roleId") as string) || null,
     bullets: linesToArray(formData.get("bullets")),
     bulletsId: linesToArray(formData.get("bulletsId")),
   };
